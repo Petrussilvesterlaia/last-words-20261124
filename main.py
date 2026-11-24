@@ -39,6 +39,10 @@ def validate(text: str) -> list:
         problems.append("only whitespace")
     if "\n" in text or "\r" in text:
         problems.append("contains a newline (must be a single line)")
+    for ch in text:
+        if (ord(ch) < 32 and ch not in ("\n", "\r")) or ord(ch) == 127:
+            problems.append("contains a control character (U+%04X)" % ord(ch))
+            break
     return problems
 
 
